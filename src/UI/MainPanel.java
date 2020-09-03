@@ -6,17 +6,17 @@ import java.awt.event.*;
 
 public class MainPanel extends JPanel implements ActionListener,
         MouseListener, MouseMotionListener, KeyListener {
-    int xpanel = 5000, ypanel = 5000;
+    int xplano = 5000, yplano = 5000;
     int Size = 25;
-    int xwidth = xpanel / Size, yheight = ypanel / Size;
-    boolean start = true;
+    int xwidth = xplano / Size, yheight = yplano / Size;
+    boolean Comienzo = true;
     int[][] life = new int[xwidth][yheight];
     int[][] beforelife = new int[xwidth][yheight];
     Timer Tiempo;
 
     public MainPanel(){
         setLayout(null);
-        setPreferredSize(new Dimension(xpanel, ypanel));
+        setPreferredSize(new Dimension(xplano, yplano));
         setBackground(new Color(23,32,42));
         Tiempo = new Timer(100, this);
         Tiempo.start();
@@ -35,14 +35,14 @@ public class MainPanel extends JPanel implements ActionListener,
     }
 
     public void grid(Graphics t){
-        for (int i = 0; i < (xpanel / Size); i++){
-            t.drawLine(0, i * Size, xpanel, i * Size);
-            t.drawLine(i * Size, 0, i * Size, ypanel);
+        for (int i = 0; i < (xplano / Size); i++){
+            t.drawLine(0, i * Size, xplano, i * Size);
+            t.drawLine(i * Size, 0, i * Size, yplano);
         }
     }
 
     public void Respaw(){
-        if (start){
+        if (Comienzo){
             for (int x = 0; x < xwidth; x++){
                 for (int y = 0; y < yheight; y++){
                     if ((int) (Math.random() * 5) == 0){
@@ -50,7 +50,7 @@ public class MainPanel extends JPanel implements ActionListener,
                     }
                 }
             }
-            start = false;
+            Comienzo = false;
         }
     }
 
@@ -61,7 +61,7 @@ public class MainPanel extends JPanel implements ActionListener,
         for (int x = 0; x < xwidth; x++){
             for (int y = 0; y < yheight; y++){
                 if (beforelife[x][y] == 1) {
-                    o.fillRect(x * Size+1, y * Size+1, Size-1, Size-1);
+                    o.fillRect(x * Size, y * Size, Size-1, Size-1);
                 }
             }
         }
@@ -95,19 +95,19 @@ public class MainPanel extends JPanel implements ActionListener,
         for (int x = 0; x < xwidth; x++) {
             for (int y = 0; y < yheight; y++) { beforelife[x][y] = 0; }
         }
-        start = true;
+        Comienzo = true;
     }
 
     public void actionPerformed(ActionEvent e){
-        int alive;
+        int Vivo;
         for (int x = 0; x < xwidth; x++){
             for (int y = 0; y < yheight; y++){
-                alive = Check(x,y);
+                Vivo = Check(x,y);
 
-                if (alive == 3){
+                if (Vivo == 3){
                     beforelife[x][y] = 1;
                 }
-                else if (alive == 2 && life[x][y] == 1){
+                else if (Vivo == 2 && life[x][y] == 1){
                     beforelife[x][y] = 1;
                 }
                 else {
@@ -119,7 +119,7 @@ public class MainPanel extends JPanel implements ActionListener,
     }
 
     public void mouseDragged(MouseEvent D){
-        start = false;
+        Comienzo = false;
         int x = D.getX()/Size;
         int y = D.getY()/Size;
 
